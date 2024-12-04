@@ -21,10 +21,10 @@ function getHumanChoice() {
 
 let humanScore = 0
 let computerScore = 0
-
-function playRound() {
+initScore()
+function playRound(choice) {
     let comp = getComputerChoice()
-    let hum = getHumanChoice()
+    let hum = choice
     if (hum === null) {
         console.log("Human entered invalid item")
     }
@@ -61,13 +61,47 @@ function playRound() {
             computerScore++
         }
     }
+    updateScore()
+    winner(humanScore, computerScore)
 }
 
-function playGame() {
-    console.log("hello")
-    for (var i = 0; i < 5; i++) {
-        console.log(i)
+function initScore() {
+    const container = document.querySelector("#score");
+
+    const playerScore = document.createElement("div");
+    playerScore.classList.add("player");
+    playerScore.id = "player"
+    playerScore.textContent = "Player score " + humanScore;
+    container.appendChild(playerScore);
+
+    const compScore = document.createElement("div");
+    compScore.classList.add("computer");
+    compScore.id = "computer"
+    compScore.textContent = "Computer score " + computerScore;
+    container.appendChild(compScore);
+}
+
+function updateScore() {
+
+    const humContainer = document.querySelector("#score")
+    const playerBox = humContainer.querySelector("#player")
+    playerBox.textContent = "Player score " + humanScore;
+
+    const compContainer = document.querySelector("#score")
+    const compBox = compContainer.querySelector("#computer")
+    compBox.textContent = "Computer score " + computerScore;
+}
+
+function winner(humanScore, computerScore) {
+    if (humanScore >= 5) {
+        alert("Human won!")
+    } else if (computerScore >= 5) {
+        alert("Computer won!")
     }
 }
-
-playGame()
+const btnP = document.querySelector("#btnP");
+btnP.onclick = () => playRound("paper")
+const btnS = document.querySelector("#btnS");
+btnS.onclick = () => playRound("scisor")
+const btnR = document.querySelector("#btnR");
+btnR.onclick = () => playRound("rock")
